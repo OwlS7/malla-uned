@@ -11,9 +11,9 @@
     <header>
         <h1>Malla Curricular - Informática UNED</h1>
         <div class="nivel-selector">
-            <button class="nivel-btn active" data-nivel="diplomado">Diplomado</button>
-            <button class="nivel-btn" data-nivel="bachillerato">Bachillerato</button>
-            <button class="nivel-btn" data-nivel="todos">Ver Todo</button>
+            <button class="nivel-btn active" id="btn-diplomado">Diplomado</button>
+            <button class="nivel-btn" id="btn-bachillerato">Bachillerato</button>
+            <button class="nivel-btn" id="btn-todos">Todos</button>
         </div>
     </header>
 
@@ -28,16 +28,12 @@
                 
                 <div class="progress-stats">
                     <div class="stat-item">
-                        <span class="stat-label">Asignaturas aprobadas:</span>
-                        <span id="aprobadas-count">0</span>
+                        <span>Asignaturas aprobadas:</span>
+                        <strong id="aprobadas-count">0</strong>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-label">Créditos completados:</span>
-                        <span id="creditos-aprobados">0</span>/129
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Progreso total:</span>
-                        <span id="progreso-porcentaje">0%</span>
+                        <span>Créditos completados:</span>
+                        <strong><span id="creditos-aprobados">0</span>/129</strong>
                     </div>
                 </div>
                 
@@ -46,7 +42,7 @@
                 </div>
                 
                 <div class="progress-actions">
-                    <button id="reset-btn">Reiniciar Progreso</button>
+                    <button id="btn-guardar">Guardar Progreso</button>
                 </div>
             </div>
         </div>

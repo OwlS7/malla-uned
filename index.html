@@ -1,116 +1,90 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Malla Curricular - Ingeniería Informática UNED</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 20px;
-        }
-        h1 {
-            color: #2c3e50;
-            text-align: center;
-        }
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .diagram {
-            flex: 1;
-            min-width: 300px;
-            border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 5px;
-        }
-        .summary {
-            flex: 1;
-            min-width: 250px;
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 5px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #2c3e50;
-            color: white;
-        }
-        footer {
-            margin-top: 20px;
-            text-align: center;
-            font-style: italic;
-            color: #7f8c8d;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Malla Curricular UNED - Informática</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Malla Curricular - Ingeniería Informática UNED</h1>
-    
-    <div class="container">
-        <div class="diagram">
-            <h2>Diagrama de Malla Curricular</h2>
-            <pre>
-Bloque A → Bloque B → Bloque C → Bloque D → Bloque E → Bloque F → Bloque G → Bloque H → Bloque I
+  <h1>Malla Curricular – Diplomado y Bachillerato en Informática (UNED Costa Rica)</h1>
+  <div class="malla">
 
-(Diplomado)
-A1: Humanidades (6 créditos)
-A2: Lógica algorítmica (4 créditos)
-A3: Matemáticas I (3 créditos)
-A4: Inglés I (3 créditos)
-...
-            </pre>
-        </div>
-        
-        <div class="summary">
-            <h2>Resumen de Créditos</h2>
-            <p><strong>Diplomado:</strong> <span id="diplomado-credits">78</span> créditos</p>
-            <p><strong>Bachillerato:</strong> <span id="bachillerato-credits">51</span> créditos</p>
-            <p><strong>Total:</strong> <span id="total-credits">129</span> créditos</p>
-            
-            <h3>Notas</h3>
-            <p>Nota Diplomado: [Tu nota]</p>
-            <p>Nota Bachillerato: [Tu nota]</p>
-            <p>Nota B. cica: [Tu nota]</p>
-        </div>
+    <!-- Bloques del Diplomado -->
+    <div class="bloque"><h2>Bloque A</h2>
+      <div class="materia" data-cred="6" data-req="Ninguno">Humanidades (2)</div>
+      <div class="materia" data-cred="4" data-req="Ninguno">03304 - Lógica algorítmica</div>
+      <div class="materia" data-cred="3" data-req="Ninguno">03068 - Matemática para computación I</div>
+      <div class="materia" data-cred="3" data-req="Ninguno">00997 - Inglés para informática I</div>
     </div>
 
-    <table>
-        <tr>
-            <th>Bloque</th>
-            <th>Asignatura</th>
-            <th>Créditos</th>
-            <th>Requisitos</th>
-        </tr>
-        <tr>
-            <td>A</td>
-            <td>Humanidades (2 asignaturas)</td>
-            <td>6</td>
-            <td>Ninguno</td>
-        </tr>
-        <!-- Más filas aquí -->
-    </table>
+    <div class="bloque"><h2>Bloque B</h2>
+      <div class="materia" data-cred="3" data-req="Ninguno">04038 - Principios de administración</div>
+      <div class="materia" data-cred="3" data-req="03304">03071 - Lógica para computación</div>
+      <div class="materia" data-cred="3" data-req="03068">03069 - Matemática para computación II</div>
+      <div class="materia" data-cred="3" data-req="00997">03072 - Inglés para informática II</div>
+      <div class="materia" data-cred="3" data-req="Ninguno">Humanidades (1)</div>
+    </div>
 
-    <footer>
-        Universidad Estatal a Distancia (UNED) - Ingeniería Informática
-    </footer>
+    <div class="bloque"><h2>Bloque C</h2>
+      <div class="materia" data-cred="4" data-req="03071/03069">00831 - Introducción a la programación</div>
+      <div class="materia" data-cred="3" data-req="03071/03069">00823 - Organización de computadoras</div>
+      <div class="materia" data-cred="3" data-req="Ninguno">00226 - Contabilidad I</div>
+      <div class="materia" data-cred="4" data-req="Ninguno">00104 - Estadística I</div>
+    </div>
 
-    <script>
-        // Aquí iría el JavaScript para hacerlo interactivo
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log("Página cargada correctamente");
-        });
-    </script>
+    <div class="bloque"><h2>Bloque D</h2>
+      <div class="materia" data-cred="4" data-req="00831">00824 - Programación intermedia</div>
+      <div class="materia" data-cred="3" data-req="00831">00826 - Base de datos</div>
+      <div class="materia" data-cred="4" data-req="00823">00830 - Arquitectura de computadoras</div>
+      <div class="materia" data-cred="3" data-req="00823/00831">00882 - Telemática y redes</div>
+      <div class="materia" data-cred="3" data-req="Ninguno">Humanidades (1)</div>
+    </div>
+
+    <div class="bloque"><h2>Bloque E</h2>
+      <div class="materia" data-cred="3" data-req="00824/00826">03300 - Ingeniería del software</div>
+      <div class="materia" data-cred="4" data-req="00824/00826">00830 - Programación avanzada</div>
+      <div class="materia" data-cred="4" data-req="00824">00825 - Estructura de datos</div>
+      <div class="materia" data-cred="3" data-req="00824/00823">00881 - Sistemas operativos</div>
+    </div>
+
+    <!-- Bloques del Bachillerato -->
+    <div class="bloque"><h2>Bloque F</h2>
+      <div class="materia" data-cred="4" data-req="03300/00830">03301 - Análisis y diseño de sistemas</div>
+      <div class="materia" data-cred="3" data-req="00830">03075 - Fundamentos en programación web</div>
+      <div class="materia" data-cred="4" data-req="00826/00823/00824/00825">03307 - Compiladores</div>
+      <div class="materia" data-cred="3" data-req="Ninguno">Humanidades (1)</div>
+    </div>
+
+    <div class="bloque"><h2>Bloque G</h2>
+      <div class="materia" data-cred="4" data-req="03301">03302 - Ingeniería de requerimientos</div>
+      <div class="materia" data-cred="3" data-req="00826">00884 - Base de datos II</div>
+      <div class="materia" data-cred="3" data-req="Ninguno">03080 - Soporte técnico</div>
+      <div class="materia" data-cred="4" data-req="00826/00823">03079 - Seguridad y auditoría en TIC</div>
+    </div>
+
+    <div class="bloque"><h2>Bloque H</h2>
+      <div class="materia" data-cred="3" data-req="00884/00881">03306 - Telemática y redes II</div>
+      <div class="materia" data-cred="3" data-req="00884">03303 - Administración TIC</div>
+      <div class="materia" data-cred="3" data-req="03069/03068">03313 - Investigación de operaciones</div>
+    </div>
+
+    <div class="bloque"><h2>Bloque I</h2>
+      <div class="materia" data-cred="3" data-req="03305">03077 - Autogestión y desarrollo empresarial</div>
+      <div class="materia" data-cred="3" data-req="03305">03078 - Tendencias en las TIC</div>
+      <div class="materia" data-cred="4" data-req="Todos los cursos anteriores">00886 - Práctica profesional</div>
+    </div>
+  </div>
+
+  <div id="info"></div>
+
+  <script>
+    const info = document.getElementById('info');
+    document.querySelectorAll('.materia').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        info.textContent = `${el.textContent} — Créditos: ${el.dataset.cred}, Requisitos: ${el.dataset.req}`;
+      });
+      el.addEventListener('mouseleave', () => info.textContent = '');
+    });
+  </script>
 </body>
 </html>

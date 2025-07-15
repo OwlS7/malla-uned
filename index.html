@@ -16,53 +16,50 @@
             <div class="niveles">
                 <button class="nivel-btn active" data-nivel="diplomado">Diplomado</button>
                 <button class="nivel-btn" data-nivel="bachillerato">Bachillerato</button>
+                <button class="nivel-btn" data-nivel="todos">Ver Todos</button>
             </div>
         </div>
     </header>
 
     <main>
-        <div class="filtros">
+        <div class="controles-progreso">
             <div class="search-box">
                 <i class="fas fa-search"></i>
                 <input type="text" id="busqueda" placeholder="Buscar asignatura...">
             </div>
-            <select id="filtro-bloque">
-                <option value="todos">Todos los bloques</option>
-                <option value="A">Bloque A</option>
-                <option value="B">Bloque B</option>
-                <option value="C">Bloque C</option>
-                <option value="D">Bloque D</option>
-                <option value="E">Bloque E</option>
-                <option value="F">Bloque F</option>
-                <option value="G">Bloque G</option>
-                <option value="H">Bloque H</option>
-                <option value="I">Bloque I</option>
-                <option value="J">Bloque J</option>
-            </select>
+            <button id="btn-guardar" class="btn-accion">
+                <i class="fas fa-save"></i> Guardar Progreso
+            </button>
+            <button id="btn-limpiar" class="btn-accion">
+                <i class="fas fa-trash-alt"></i> Reiniciar
+            </button>
         </div>
 
-        <div class="bloques-container" id="diplomado-view">
-            <!-- Bloques A-E generados dinámicamente -->
+        <div class="bloques-container">
+            <!-- Todos los bloques se generarán aquí -->
         </div>
 
-        <div class="bloques-container" id="bachillerato-view" style="display: none;">
-            <!-- Bloques F-J generados dinámicamente -->
-        </div>
-
-        <div class="resumen-creditos">
-            <div class="creditos-box">
-                <h3>Resumen de Créditos</h3>
-                <div class="creditos-item">
-                    <span>Diplomado:</span>
-                    <span id="total-diplomado">78</span>
+        <div class="resumen-progreso">
+            <div class="progreso-box">
+                <h3>Progreso de la Carrera</h3>
+                <div class="progreso-item">
+                    <span>Asignaturas aprobadas:</span>
+                    <span id="aprobadas-count">0</span>
                 </div>
-                <div class="creditos-item">
-                    <span>Bachillerato:</span>
-                    <span id="total-bachillerato">51</span>
+                <div class="progreso-item">
+                    <span>Asignaturas pendientes:</span>
+                    <span id="pendientes-count">0</span>
                 </div>
-                <div class="creditos-item total">
-                    <span>Total:</span>
-                    <span id="total-general">129</span>
+                <div class="progreso-item">
+                    <span>Créditos completados:</span>
+                    <span id="creditos-completados">0</span>
+                </div>
+                <div class="progreso-item total">
+                    <span>Progreso total:</span>
+                    <span id="progreso-total">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
                 </div>
             </div>
         </div>

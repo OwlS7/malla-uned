@@ -1,50 +1,78 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-CR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Malla Curricular - Enfermería</title>
-    <link rel="stylesheet" href="estilos.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>Malla Curricular - Informática UNED</title>
+    <link rel="stylesheet" href="css/estilos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Malla Curricular - Enfermería</h1>
-        
-        <!-- 2° Semestre -->
-        <div class="semester" data-semester="2">
-            <div class="semester-header">
-                <h2>2° Semestre</h2>
-                <span class="credits-sum">Total créditos: <span class="total-credits">0</span></span>
-            </div>
-            <div class="courses-container">
-                <!-- Las tarjetas se generarán dinámicamente con JavaScript -->
+    <header>
+        <div class="header-container">
+            <img src="img/logo-uned.png" alt="Logo UNED" class="logo">
+            <h1>Malla Curricular - Informática UNED</h1>
+            <div class="niveles">
+                <button class="nivel-btn active" data-nivel="diplomado">Diplomado</button>
+                <button class="nivel-btn" data-nivel="bachillerato">Bachillerato</button>
             </div>
         </div>
-        
-        <!-- 3° Semestre -->
-        <div class="semester" data-semester="3">
-            <div class="semester-header">
-                <h2>3° Semestre</h2>
-                <span class="credits-sum">Total créditos: <span class="total-credits">0</span></span>
-            </div>
-            <div class="courses-container">
-                <!-- Las tarjetas se generarán dinámicamente con JavaScript -->
-            </div>
-        </div>
-        
-        <!-- 4° Semestre -->
-        <div class="semester" data-semester="4">
-            <div class="semester-header">
-                <h2>4° Semestre</h2>
-                <span class="credits-sum">Total créditos: <span class="total-credits">0</span></span>
-            </div>
-            <div class="courses-container">
-                <!-- Las tarjetas se generarán dinámicamente con JavaScript -->
-            </div>
-        </div>
-    </div>
+    </header>
 
-    <script src="script.js"></script>
+    <main>
+        <div class="filtros">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="busqueda" placeholder="Buscar asignatura...">
+            </div>
+            <select id="filtro-bloque">
+                <option value="todos">Todos los bloques</option>
+                <option value="A">Bloque A</option>
+                <option value="B">Bloque B</option>
+                <option value="C">Bloque C</option>
+                <option value="D">Bloque D</option>
+                <option value="E">Bloque E</option>
+                <option value="F">Bloque F</option>
+                <option value="G">Bloque G</option>
+                <option value="H">Bloque H</option>
+                <option value="I">Bloque I</option>
+                <option value="J">Bloque J</option>
+            </select>
+        </div>
+
+        <div class="bloques-container" id="diplomado-view">
+            <!-- Bloques A-E generados dinámicamente -->
+        </div>
+
+        <div class="bloques-container" id="bachillerato-view" style="display: none;">
+            <!-- Bloques F-J generados dinámicamente -->
+        </div>
+
+        <div class="resumen-creditos">
+            <div class="creditos-box">
+                <h3>Resumen de Créditos</h3>
+                <div class="creditos-item">
+                    <span>Diplomado:</span>
+                    <span id="total-diplomado">78</span>
+                </div>
+                <div class="creditos-item">
+                    <span>Bachillerato:</span>
+                    <span id="total-bachillerato">51</span>
+                </div>
+                <div class="creditos-item total">
+                    <span>Total:</span>
+                    <span id="total-general">129</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Universidad Estatal a Distancia (UNED) - Costa Rica</p>
+        <p>Programa de Ingeniería Informática</p>
+    </footer>
+
+    <script src="js/script.js"></script>
 </body>
 </html>

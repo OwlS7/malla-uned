@@ -8,6 +8,8 @@
     --border-color: #dddddd;
     --success-color: #2ecc71;
     --warning-color: #e74c3c;
+    --diplomado-color: #3498db;
+    --bachillerato-color: #e67e22;
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -194,20 +196,59 @@ header h1 {
     justify-content: space-between;
 }
 
+.progress-group {
+    margin-bottom: 15px;
+}
+
+.progress-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #555;
+}
+
 .progress-bar {
-    width: 100%;
-    height: 10px;
-    background-color: #ecf0f1;
-    border-radius: 5px;
-    margin: 15px 0;
+    height: 25px;
+    background-color: #f0f0f0;
+    border-radius: 12px;
+    position: relative;
     overflow: hidden;
+    margin-bottom: 5px;
 }
 
 .progress-fill {
     height: 100%;
-    background-color: var(--success-color);
-    width: 0%;
+    border-radius: 12px;
     transition: width 0.5s ease;
+}
+
+.general-fill {
+    background-color: var(--success-color);
+}
+
+.diplomado-fill {
+    background-color: var(--diplomado-color);
+}
+
+.bachillerato-fill {
+    background-color: var(--bachillerato-color);
+}
+
+.progress-percent {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #333;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.creditos-detalle {
+    text-align: right;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 10px;
 }
 
 .progress-actions {

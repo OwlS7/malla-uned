@@ -1,33 +1,20 @@
-# Malla Curricular Interactiva - Ingeniería Informática UNED
+# Malla Curricular UNED - Diplomado y Bachillerato en Informática
 
-Este repositorio contiene una visualización interactiva de la malla curricular de la carrera de Ingeniería Informática en la Universidad Estatal a Distancia (UNED) de Costa Rica.
+Visualización interactiva del plan de estudios de la carrera en la UNED Costa Rica.
 
-## Características
+## 📄 Contenido
 
-- Visualización en diagrama de flujo interactivo
-- Tabla filtrable de asignaturas
-- Resumen de créditos por nivel
-- Diseño responsive para móviles y desktop
+- Diplomado (Bloques A - E)
+- Bachillerato (Bloques F - I)
 
-## Cómo usar
+## 🔧 Tecnologías
 
-1. Clona este repositorio
-2. Abre `index.html` en tu navegador
-3. Explora la malla curricular usando los controles:
-   - Cambia entre vista de diagrama y tabla
-   - Filtra por bloque o texto
-   - Muestra solo Diplomado o Bachillerato
+- HTML
+- CSS
+- JavaScript (básico)
 
-## Tecnologías utilizadas
+## 🚀 Cómo usar
 
-- HTML5, CSS3, JavaScript
-- [Mermaid.js](https://mermaid.js.org/) para los diagramas
-- GitHub Pages para el hosting
-
-## Contribuir
-
-Si encuentras algún error o quieres mejorar el proyecto, abre un issue o envía un pull request.
-
-## Licencia
-
-MIT License
+1. Abre el archivo `index.html` en tu navegador.
+2. Al pasar el mouse sobre una materia, verás los créditos y requisitos.
+3. Puedes subir este proyecto a GitHub y activarlo con **GitHub Pages** desde los Settings.

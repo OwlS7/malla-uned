@@ -66,11 +66,12 @@ const mallaData = {
 
 // Variables globales
 let currentView = 'diplomado';
+let progresoGlobal = {};
 
 // Cargar la página
 document.addEventListener('DOMContentLoaded', function() {
-    cargarMalla();
     cargarProgreso();
+    cargarMalla();
     configurarEventos();
 });
 
@@ -78,7 +79,6 @@ function cargarMalla() {
     const container = document.getElementById('bloques-container');
     container.innerHTML = '';
 
-    // Cargar bloques según la vista actual
     if (currentView === 'todos') {
         cargarBloques(mallaData.diplomado);
         cargarBloques(mallaData.bachillerato);
@@ -93,7 +93,6 @@ function cargarBloques(bloquesData) {
     for (const [nombreBloque, asignaturas] of Object.entries(bloquesData)) {
         const bloqueDiv = document.createElement('div');
         bloqueDiv.className = 'bloque';
-        bloqueDiv.dataset.nivel = currentView;
 
         // Cabecera del bloque
         const bloqueHeader = document.createElement('div');
@@ -115,8 +114,14 @@ function cargarBloques(bloquesData) {
         // Asignaturas
         asignaturas.forEach(asignatura => {
             const asignaturaDiv = document.createElement('div');
+            const codigoAsignatura = asignatura.codigo || asignatura.nombre.replace(/\s+/g, '-').toLowerCase();
             asignaturaDiv.className = 'asignatura';
-            asignaturaDiv.dataset.codigo = asignatura.codigo || asignatura.nombre.replace(/\s+/g, '-').toLowerCase();
+            asignaturaDiv.dataset.codigo = codigoAsignatura;
+
+            // Aplicar estado si está en progresoGlobal
+            if (progresoGlobal[codigoAsignatura]) {
+                asignaturaDiv.classList.add('aprobada');
+            }
 
             // Información de la asignatura
             const infoDiv = document.createElement('div');
@@ -168,6 +173,8 @@ function cargarBloques(bloquesData) {
             // Evento para marcar como aprobada
             asignaturaDiv.addEventListener('click', function() {
                 this.classList.toggle('aprobada');
+                const codigo = this.dataset.codigo;
+                progresoGlobal[codigo] = this.classList.contains('aprobada');
                 actualizarProgreso();
             });
 
@@ -176,6 +183,8 @@ function cargarBloques(bloquesData) {
 
         container.appendChild(bloqueDiv);
     }
+    
+    actualizarProgreso();
 }
 
 function configurarEventos() {
@@ -200,6 +209,16 @@ function configurarEventos() {
 
     // Botón guardar
     document.getElementById('btn-guardar').addEventListener('click', guardarProgreso);
+
+    // Botón reiniciar
+    document.getElementById('btn-reiniciar').addEventListener('click', function() {
+        if (confirm('¿Estás seguro de que quieres reiniciar todo tu progreso?')) {
+            progresoGlobal = {};
+            localStorage.removeItem('malla-progreso');
+            cargarMalla();
+            alert('Progreso reiniciado correctamente');
+        }
+    });
 }
 
 function actualizarBotones() {
@@ -210,48 +229,35 @@ function actualizarBotones() {
 }
 
 function guardarProgreso() {
-    const progreso = {};
-    
-    document.querySelectorAll('.asignatura').forEach(asig => {
-        const codigo = asig.dataset.codigo;
-        progreso[codigo] = asig.classList.contains('aprobada');
-    });
-    
-    localStorage.setItem('malla-progreso', JSON.stringify(progreso));
+    localStorage.setItem('malla-progreso', JSON.stringify(progresoGlobal));
     alert('Progreso guardado correctamente');
 }
 
 function cargarProgreso() {
     const progresoGuardado = localStorage.getItem('malla-progreso');
-    if (!progresoGuardado) return;
-    
-    const progreso = JSON.parse(progresoGuardado);
-    
-    // Esperar a que se cargue la malla
-    setTimeout(() => {
-        document.querySelectorAll('.asignatura').forEach(asig => {
-            const codigo = asig.dataset.codigo;
-            if (progreso[codigo]) {
-                asig.classList.add('aprobada');
-            }
-        });
-        actualizarProgreso();
-    }, 100);
+    if (progresoGuardado) {
+        progresoGlobal = JSON.parse(progresoGuardado);
+    }
 }
 
 function actualizarProgreso() {
-    const totalAsignaturas = document.querySelectorAll('.asignatura').length;
-    const aprobadas = document.querySelectorAll('.asignatura.aprobada').length;
+    const totalAsignaturas = Object.values(mallaData.diplomado).flat().length + 
+                             Object.values(mallaData.bachillerato).flat().length;
     
-    // Calcular créditos aprobados
+    const aprobadas = Object.values(progresoGlobal).filter(Boolean).length;
+    
     let creditos = 0;
-    document.querySelectorAll('.asignatura.aprobada').forEach(asig => {
-        const creditosText = asig.querySelector('.asignatura-creditos').textContent;
-        const creditosAsig = parseInt(creditosText);
-        creditos += isNaN(creditosAsig) ? 0 : creditosAsig;
-    });
+    for (const nivel of [mallaData.diplomado, mallaData.bachillerato]) {
+        for (const bloque of Object.values(nivel)) {
+            for (const asignatura of bloque) {
+                const codigo = asignatura.codigo || asignatura.nombre.replace(/\s+/g, '-').toLowerCase();
+                if (progresoGlobal[codigo]) {
+                    creditos += asignatura.creditos;
+                }
+            }
+        }
+    }
     
-    // Actualizar UI
     document.getElementById('aprobadas-count').textContent = aprobadas;
     document.getElementById('creditos-aprobados').textContent = creditos;
     

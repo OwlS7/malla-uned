@@ -1,0 +1,148 @@
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --general-color: #2ecc71;
+    --light-bg: #f8f9fa;
+    --border-color: #dee2e6;
+    --text-light: #ffffff;
+    --text-dark: #333333;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--secondary-color);
+}
+
+.semester {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+.semester-header {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.semester-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.credits-sum {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.courses-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.course-card {
+    border-left: 4px solid var(--secondary-color);
+    padding: 15px;
+    background-color: var(--light-bg);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.course-card.core {
+    border-left-color: var(--accent-color);
+}
+
+.course-card.professional {
+    border-left-color: var(--secondary-color);
+}
+
+.course-card.general {
+    border-left-color: var(--general-color);
+}
+
+.course-card.research {
+    border-left-color: #9b59b6;
+}
+
+.course-title {
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--primary-color);
+}
+
+.course-type {
+    font-size: 0.8rem;
+    color: #7f8c8d;
+    margin-bottom: 10px;
+}
+
+.course-credits {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    margin-top: 5px;
+}
+
+.course-card.core .course-credits {
+    background-color: var(--accent-color);
+}
+
+.course-card.general .course-credits {
+    background-color: var(--general-color);
+}
+
+.course-card.research .course-credits {
+    background-color: #9b59b6;
+}
+
+@media (max-width: 768px) {
+    .courses-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .semester-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .credits-sum {
+        margin-top: 8px;
+    }
+}

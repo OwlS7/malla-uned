@@ -209,16 +209,6 @@ function configurarEventos() {
 
     // Botón guardar
     document.getElementById('btn-guardar').addEventListener('click', guardarProgreso);
-
-    // Botón reiniciar
-    document.getElementById('btn-reiniciar').addEventListener('click', function() {
-        if (confirm('¿Estás seguro de que quieres reiniciar todo tu progreso?')) {
-            progresoGlobal = {};
-            localStorage.removeItem('malla-progreso');
-            cargarMalla();
-            alert('Progreso reiniciado correctamente');
-        }
-    });
 }
 
 function actualizarBotones() {
@@ -241,26 +231,52 @@ function cargarProgreso() {
 }
 
 function actualizarProgreso() {
-    const totalAsignaturas = Object.values(mallaData.diplomado).flat().length + 
-                             Object.values(mallaData.bachillerato).flat().length;
+    // Totales fijos según la malla curricular
+    const totalCreditosDiplomado = 78;
+    const totalCreditosBachillerato = 51;
+    const totalCreditosGeneral = totalCreditosDiplomado + totalCreditosBachillerato;
     
-    const aprobadas = Object.values(progresoGlobal).filter(Boolean).length;
+    let creditosDiplomado = 0;
+    let creditosBachillerato = 0;
+    let asignaturasAprobadas = 0;
     
-    let creditos = 0;
-    for (const nivel of [mallaData.diplomado, mallaData.bachillerato]) {
-        for (const bloque of Object.values(nivel)) {
+    // Calcular créditos aprobados
+    for (const [nivel, bloques] of Object.entries(mallaData)) {
+        for (const bloque of Object.values(bloques)) {
             for (const asignatura of bloque) {
                 const codigo = asignatura.codigo || asignatura.nombre.replace(/\s+/g, '-').toLowerCase();
                 if (progresoGlobal[codigo]) {
-                    creditos += asignatura.creditos;
+                    asignaturasAprobadas++;
+                    if (nivel === 'diplomado') {
+                        creditosDiplomado += asignatura.creditos;
+                    } else {
+                        creditosBachillerato += asignatura.creditos;
+                    }
                 }
             }
         }
     }
     
-    document.getElementById('aprobadas-count').textContent = aprobadas;
-    document.getElementById('creditos-aprobados').textContent = creditos;
+    const creditosGenerales = creditosDiplomado + creditosBachillerato;
     
-    const porcentaje = totalAsignaturas > 0 ? Math.round((aprobadas / totalAsignaturas) * 100) : 0;
-    document.getElementById('progress-fill').style.width = `${porcentaje}%`;
+    // Actualizar estadísticas
+    document.getElementById('aprobadas-count').textContent = asignaturasAprobadas;
+    document.getElementById('creditos-aprobados').textContent = creditosGenerales;
+    document.getElementById('diplomado-creditos').textContent = creditosDiplomado;
+    document.getElementById('bachillerato-creditos').textContent = creditosBachillerato;
+    
+    // Calcular porcentajes (asegurando que no excedan el 100%)
+    const porcentajeGeneral = Math.min(100, Math.round((creditosGenerales / totalCreditosGeneral) * 100));
+    const porcentajeDiplomado = Math.min(100, Math.round((creditosDiplomado / totalCreditosDiplomado) * 100));
+    const porcentajeBachillerato = Math.min(100, Math.round((creditosBachillerato / totalCreditosBachillerato) * 100));
+    
+    // Actualizar barras de progreso
+    document.getElementById('general-fill').style.width = `${porcentajeGeneral}%`;
+    document.getElementById('general-percent').textContent = `${porcentajeGeneral}%`;
+    
+    document.getElementById('diplomado-fill').style.width = `${porcentajeDiplomado}%`;
+    document.getElementById('diplomado-percent').textContent = `${porcentajeDiplomado}%`;
+    
+    document.getElementById('bachillerato-fill').style.width = `${porcentajeBachillerato}%`;
+    document.getElementById('bachillerato-percent').textContent = `${porcentajeBachillerato}%`;
 }

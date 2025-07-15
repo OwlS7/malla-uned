@@ -1,90 +1,108 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Malla Curricular UNED - Informática</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malla Curricular - Ingeniería Informática UNED</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/mermaid.min.js"></script>
 </head>
 <body>
-  <h1>Malla Curricular – Diplomado y Bachillerato en Informática (UNED Costa Rica)</h1>
-  <div class="malla">
+    <header>
+        <h1>Malla Curricular - Ingeniería Informática UNED</h1>
+        <div class="controls">
+            <button id="show-diplomado">Mostrar Diplomado</button>
+            <button id="show-bachillerato">Mostrar Bachillerato</button>
+            <button id="show-all">Mostrar Todo</button>
+        </div>
+    </header>
 
-    <!-- Bloques del Diplomado -->
-    <div class="bloque"><h2>Bloque A</h2>
-      <div class="materia" data-cred="6" data-req="Ninguno">Humanidades (2)</div>
-      <div class="materia" data-cred="4" data-req="Ninguno">03304 - Lógica algorítmica</div>
-      <div class="materia" data-cred="3" data-req="Ninguno">03068 - Matemática para computación I</div>
-      <div class="materia" data-cred="3" data-req="Ninguno">00997 - Inglés para informática I</div>
-    </div>
+    <main>
+        <div class="view-options">
+            <label><input type="radio" name="view" value="diagram" checked> Diagrama</label>
+            <label><input type="radio" name="view" value="table"> Tabla</label>
+        </div>
 
-    <div class="bloque"><h2>Bloque B</h2>
-      <div class="materia" data-cred="3" data-req="Ninguno">04038 - Principios de administración</div>
-      <div class="materia" data-cred="3" data-req="03304">03071 - Lógica para computación</div>
-      <div class="materia" data-cred="3" data-req="03068">03069 - Matemática para computación II</div>
-      <div class="materia" data-cred="3" data-req="00997">03072 - Inglés para informática II</div>
-      <div class="materia" data-cred="3" data-req="Ninguno">Humanidades (1)</div>
-    </div>
+        <div id="diagram-view" class="view">
+            <div class="mermaid">
+                flowchart TD
+                    A[Bloque A] --> B[Bloque B]
+                    B --> C[Bloque C]
+                    C --> D[Bloque D]
+                    D --> E[Bloque E]
+                    E --> F[Bloque F]
+                    F --> G[Bloque G]
+                    G --> H[Bloque H]
+                    H --> I[Bloque I]
+                    
+                    subgraph Diplomado
+                    A -->|Humanidades| A1[6 créditos]
+                    A --> A2[Lógica algorítmica\n4 créditos]
+                    A --> A3[Matemáticas I\n3 créditos]
+                    A --> A4[Inglés I\n3 créditos]
+                    B --> B1[Principios de administración\n3 créditos]
+                    B --> B2[Lógica para computación\n3 créditos\nReq: 03304]
+                    B --> B3[Matemáticas II\n3 créditos\nReq: 03068]
+                    B --> B4[Inglés II\n3 créditos\nReq: 00997]
+                    C --> C1[Introducción a programación\n4 créditos\nReq: 03069/03071/03072]
+                    C --> C2[Organización de computadoras\n4 créditos\nReq: 03071/03069]
+                    D --> D1[Programación intermedia\n4 créditos\nReq: 00831]
+                    D --> D2[Base de datos\n3 créditos\nReq: 00831]
+                    E --> E1[Ingeniería del software\n4 créditos\nReq: 00824/00826]
+                    E --> E2[Programación avanzada\n4 créditos\nReq: 00824/00826]
+                    end
+                    
+                    subgraph Bachillerato
+                    F --> F1[Análisis y diseño\n4 créditos\nReq: 03300/00830]
+                    F --> F2[Programación WEB\n3 créditos\nReq: 00830]
+                    G --> G1[Ingeniería de requerimientos\n4 créditos\nReq: 03301]
+                    G --> G2[Base de datos II\n3 créditos\nReq: 00826]
+                    I --> I1[Práctica profesional\n10 créditos]
+                    end
+            </div>
+        </div>
 
-    <div class="bloque"><h2>Bloque C</h2>
-      <div class="materia" data-cred="4" data-req="03071/03069">00831 - Introducción a la programación</div>
-      <div class="materia" data-cred="3" data-req="03071/03069">00823 - Organización de computadoras</div>
-      <div class="materia" data-cred="3" data-req="Ninguno">00226 - Contabilidad I</div>
-      <div class="materia" data-cred="4" data-req="Ninguno">00104 - Estadística I</div>
-    </div>
+        <div id="table-view" class="view" style="display:none;">
+            <div class="filters">
+                <input type="text" id="search" placeholder="Buscar asignatura...">
+                <select id="block-filter">
+                    <option value="">Todos los bloques</option>
+                    <option value="A">Bloque A</option>
+                    <option value="B">Bloque B</option>
+                    <!-- Más opciones... -->
+                </select>
+            </div>
+            <table id="courses-table">
+                <thead>
+                    <tr>
+                        <th>Bloque</th>
+                        <th>Código</th>
+                        <th>Asignatura</th>
+                        <th>Créditos</th>
+                        <th>Requisitos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Datos cargados dinámicamente -->
+                </tbody>
+            </table>
+        </div>
 
-    <div class="bloque"><h2>Bloque D</h2>
-      <div class="materia" data-cred="4" data-req="00831">00824 - Programación intermedia</div>
-      <div class="materia" data-cred="3" data-req="00831">00826 - Base de datos</div>
-      <div class="materia" data-cred="4" data-req="00823">00830 - Arquitectura de computadoras</div>
-      <div class="materia" data-cred="3" data-req="00823/00831">00882 - Telemática y redes</div>
-      <div class="materia" data-cred="3" data-req="Ninguno">Humanidades (1)</div>
-    </div>
+        <div class="summary">
+            <h3>Resumen de Créditos</h3>
+            <p>Diplomado: <span id="diplomado-credits">0</span> créditos</p>
+            <p>Bachillerato: <span id="bachillerato-credits">0</span> créditos</p>
+            <p>Total: <span id="total-credits">0</span> créditos</p>
+        </div>
+    </main>
 
-    <div class="bloque"><h2>Bloque E</h2>
-      <div class="materia" data-cred="3" data-req="00824/00826">03300 - Ingeniería del software</div>
-      <div class="materia" data-cred="4" data-req="00824/00826">00830 - Programación avanzada</div>
-      <div class="materia" data-cred="4" data-req="00824">00825 - Estructura de datos</div>
-      <div class="materia" data-cred="3" data-req="00824/00823">00881 - Sistemas operativos</div>
-    </div>
+    <footer>
+        <p>Universidad Estatal a Distancia (UNED) - Ingeniería Informática</p>
+    </footer>
 
-    <!-- Bloques del Bachillerato -->
-    <div class="bloque"><h2>Bloque F</h2>
-      <div class="materia" data-cred="4" data-req="03300/00830">03301 - Análisis y diseño de sistemas</div>
-      <div class="materia" data-cred="3" data-req="00830">03075 - Fundamentos en programación web</div>
-      <div class="materia" data-cred="4" data-req="00826/00823/00824/00825">03307 - Compiladores</div>
-      <div class="materia" data-cred="3" data-req="Ninguno">Humanidades (1)</div>
-    </div>
-
-    <div class="bloque"><h2>Bloque G</h2>
-      <div class="materia" data-cred="4" data-req="03301">03302 - Ingeniería de requerimientos</div>
-      <div class="materia" data-cred="3" data-req="00826">00884 - Base de datos II</div>
-      <div class="materia" data-cred="3" data-req="Ninguno">03080 - Soporte técnico</div>
-      <div class="materia" data-cred="4" data-req="00826/00823">03079 - Seguridad y auditoría en TIC</div>
-    </div>
-
-    <div class="bloque"><h2>Bloque H</h2>
-      <div class="materia" data-cred="3" data-req="00884/00881">03306 - Telemática y redes II</div>
-      <div class="materia" data-cred="3" data-req="00884">03303 - Administración TIC</div>
-      <div class="materia" data-cred="3" data-req="03069/03068">03313 - Investigación de operaciones</div>
-    </div>
-
-    <div class="bloque"><h2>Bloque I</h2>
-      <div class="materia" data-cred="3" data-req="03305">03077 - Autogestión y desarrollo empresarial</div>
-      <div class="materia" data-cred="3" data-req="03305">03078 - Tendencias en las TIC</div>
-      <div class="materia" data-cred="4" data-req="Todos los cursos anteriores">00886 - Práctica profesional</div>
-    </div>
-  </div>
-
-  <div id="info"></div>
-
-  <script>
-    const info = document.getElementById('info');
-    document.querySelectorAll('.materia').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        info.textContent = `${el.textContent} — Créditos: ${el.dataset.cred}, Requisitos: ${el.dataset.req}`;
-      });
-      el.addEventListener('mouseleave', () => info.textContent = '');
-    });
-  </script>
+    <script src="assets/js/script.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
 </body>
 </html>

@@ -32,13 +32,42 @@
                         <strong id="aprobadas-count">0</strong>
                     </div>
                     <div class="stat-item">
-                        <span>Créditos completados:</span>
+                        <span>Total créditos:</span>
                         <strong><span id="creditos-aprobados">0</span>/129</strong>
                     </div>
                 </div>
                 
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progress-fill"></div>
+                <!-- Barra de progreso general -->
+                <div class="progress-group">
+                    <label>Progreso general</label>
+                    <div class="progress-bar">
+                        <div class="progress-fill general-fill" id="general-fill"></div>
+                        <span class="progress-percent" id="general-percent">0%</span>
+                    </div>
+                </div>
+                
+                <!-- Barra de diplomado -->
+                <div class="progress-group">
+                    <label>Diplomado completado</label>
+                    <div class="progress-bar">
+                        <div class="progress-fill diplomado-fill" id="diplomado-fill"></div>
+                        <span class="progress-percent" id="diplomado-percent">0%</span>
+                    </div>
+                    <div class="creditos-detalle">
+                        <span id="diplomado-creditos">0</span>/78 créditos
+                    </div>
+                </div>
+                
+                <!-- Barra de bachillerato -->
+                <div class="progress-group">
+                    <label>Bachillerato completado</label>
+                    <div class="progress-bar">
+                        <div class="progress-fill bachillerato-fill" id="bachillerato-fill"></div>
+                        <span class="progress-percent" id="bachillerato-percent">0%</span>
+                    </div>
+                    <div class="creditos-detalle">
+                        <span id="bachillerato-creditos">0</span>/51 créditos
+                    </div>
                 </div>
                 
                 <div class="progress-actions">
@@ -51,6 +80,7 @@
     <footer>
         <p>Universidad Estatal a Distancia (UNED) - Costa Rica</p>
         <p>Programa de Ingeniería Informática</p>
+        <p>Developed by OwlS</p>
     </footer>
 
     <script src="script.js"></script>

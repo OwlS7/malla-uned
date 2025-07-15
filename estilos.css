@@ -44,6 +44,7 @@ header h1 {
     justify-content: center;
     gap: 10px;
     margin-top: 15px;
+    flex-wrap: wrap;
 }
 
 .nivel-btn {
@@ -78,6 +79,10 @@ header h1 {
     border-radius: 8px;
     padding: 20px;
     box-shadow: var(--shadow);
+}
+
+.bloque.hidden {
+    display: none;
 }
 
 .bloque-header {
@@ -210,19 +215,19 @@ header h1 {
     justify-content: center;
 }
 
-#reset-btn {
+#btn-guardar {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: var(--warning-color);
+    background-color: var(--primary-color);
     color: white;
     font-weight: 500;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-#reset-btn:hover {
-    background-color: #c0392b;
+#btn-guardar:hover {
+    background-color: #005a2b;
 }
 
 footer {

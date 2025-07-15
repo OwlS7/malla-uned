@@ -4,105 +4,113 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Malla Curricular - Ingeniería Informática UNED</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <script src="assets/js/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .diagram {
+            flex: 1;
+            min-width: 300px;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .summary {
+            flex: 1;
+            min-width: 250px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #2c3e50;
+            color: white;
+        }
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            font-style: italic;
+            color: #7f8c8d;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Malla Curricular - Ingeniería Informática UNED</h1>
-        <div class="controls">
-            <button id="show-diplomado">Mostrar Diplomado</button>
-            <button id="show-bachillerato">Mostrar Bachillerato</button>
-            <button id="show-all">Mostrar Todo</button>
-        </div>
-    </header>
+    <h1>Malla Curricular - Ingeniería Informática UNED</h1>
+    
+    <div class="container">
+        <div class="diagram">
+            <h2>Diagrama de Malla Curricular</h2>
+            <pre>
+Bloque A → Bloque B → Bloque C → Bloque D → Bloque E → Bloque F → Bloque G → Bloque H → Bloque I
 
-    <main>
-        <div class="view-options">
-            <label><input type="radio" name="view" value="diagram" checked> Diagrama</label>
-            <label><input type="radio" name="view" value="table"> Tabla</label>
+(Diplomado)
+A1: Humanidades (6 créditos)
+A2: Lógica algorítmica (4 créditos)
+A3: Matemáticas I (3 créditos)
+A4: Inglés I (3 créditos)
+...
+            </pre>
         </div>
-
-        <div id="diagram-view" class="view">
-            <div class="mermaid">
-                flowchart TD
-                    A[Bloque A] --> B[Bloque B]
-                    B --> C[Bloque C]
-                    C --> D[Bloque D]
-                    D --> E[Bloque E]
-                    E --> F[Bloque F]
-                    F --> G[Bloque G]
-                    G --> H[Bloque H]
-                    H --> I[Bloque I]
-                    
-                    subgraph Diplomado
-                    A -->|Humanidades| A1[6 créditos]
-                    A --> A2[Lógica algorítmica\n4 créditos]
-                    A --> A3[Matemáticas I\n3 créditos]
-                    A --> A4[Inglés I\n3 créditos]
-                    B --> B1[Principios de administración\n3 créditos]
-                    B --> B2[Lógica para computación\n3 créditos\nReq: 03304]
-                    B --> B3[Matemáticas II\n3 créditos\nReq: 03068]
-                    B --> B4[Inglés II\n3 créditos\nReq: 00997]
-                    C --> C1[Introducción a programación\n4 créditos\nReq: 03069/03071/03072]
-                    C --> C2[Organización de computadoras\n4 créditos\nReq: 03071/03069]
-                    D --> D1[Programación intermedia\n4 créditos\nReq: 00831]
-                    D --> D2[Base de datos\n3 créditos\nReq: 00831]
-                    E --> E1[Ingeniería del software\n4 créditos\nReq: 00824/00826]
-                    E --> E2[Programación avanzada\n4 créditos\nReq: 00824/00826]
-                    end
-                    
-                    subgraph Bachillerato
-                    F --> F1[Análisis y diseño\n4 créditos\nReq: 03300/00830]
-                    F --> F2[Programación WEB\n3 créditos\nReq: 00830]
-                    G --> G1[Ingeniería de requerimientos\n4 créditos\nReq: 03301]
-                    G --> G2[Base de datos II\n3 créditos\nReq: 00826]
-                    I --> I1[Práctica profesional\n10 créditos]
-                    end
-            </div>
-        </div>
-
-        <div id="table-view" class="view" style="display:none;">
-            <div class="filters">
-                <input type="text" id="search" placeholder="Buscar asignatura...">
-                <select id="block-filter">
-                    <option value="">Todos los bloques</option>
-                    <option value="A">Bloque A</option>
-                    <option value="B">Bloque B</option>
-                    <!-- Más opciones... -->
-                </select>
-            </div>
-            <table id="courses-table">
-                <thead>
-                    <tr>
-                        <th>Bloque</th>
-                        <th>Código</th>
-                        <th>Asignatura</th>
-                        <th>Créditos</th>
-                        <th>Requisitos</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Datos cargados dinámicamente -->
-                </tbody>
-            </table>
-        </div>
-
+        
         <div class="summary">
-            <h3>Resumen de Créditos</h3>
-            <p>Diplomado: <span id="diplomado-credits">0</span> créditos</p>
-            <p>Bachillerato: <span id="bachillerato-credits">0</span> créditos</p>
-            <p>Total: <span id="total-credits">0</span> créditos</p>
+            <h2>Resumen de Créditos</h2>
+            <p><strong>Diplomado:</strong> <span id="diplomado-credits">78</span> créditos</p>
+            <p><strong>Bachillerato:</strong> <span id="bachillerato-credits">51</span> créditos</p>
+            <p><strong>Total:</strong> <span id="total-credits">129</span> créditos</p>
+            
+            <h3>Notas</h3>
+            <p>Nota Diplomado: [Tu nota]</p>
+            <p>Nota Bachillerato: [Tu nota]</p>
+            <p>Nota B. cica: [Tu nota]</p>
         </div>
-    </main>
+    </div>
+
+    <table>
+        <tr>
+            <th>Bloque</th>
+            <th>Asignatura</th>
+            <th>Créditos</th>
+            <th>Requisitos</th>
+        </tr>
+        <tr>
+            <td>A</td>
+            <td>Humanidades (2 asignaturas)</td>
+            <td>6</td>
+            <td>Ninguno</td>
+        </tr>
+        <!-- Más filas aquí -->
+    </table>
 
     <footer>
-        <p>Universidad Estatal a Distancia (UNED) - Ingeniería Informática</p>
+        Universidad Estatal a Distancia (UNED) - Ingeniería Informática
     </footer>
 
-    <script src="assets/js/script.js"></script>
     <script>
-        mermaid.initialize({ startOnLoad: true });
+        // Aquí iría el JavaScript para hacerlo interactivo
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("Página cargada correctamente");
+        });
     </script>
 </body>
 </html>

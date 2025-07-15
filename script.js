@@ -64,86 +64,83 @@ const mallaData = {
     }
 };
 
+// Variables globales
+let currentView = 'diplomado';
+
+// Cargar la página
 document.addEventListener('DOMContentLoaded', function() {
-    // Cargar malla inicial
-    renderMalla('diplomado');
-    
-    // Cargar progreso guardado
-    loadProgress();
-    
-    // Configurar eventos
-    setupEventListeners();
+    cargarMalla();
+    cargarProgreso();
+    configurarEventos();
 });
 
-function renderMalla(nivel) {
+function cargarMalla() {
     const container = document.getElementById('bloques-container');
     container.innerHTML = '';
-    
-    if (nivel === 'todos') {
-        renderNivel('diplomado');
-        renderNivel('bachillerato');
+
+    // Cargar bloques según la vista actual
+    if (currentView === 'todos') {
+        cargarBloques(mallaData.diplomado);
+        cargarBloques(mallaData.bachillerato);
     } else {
-        renderNivel(nivel);
+        cargarBloques(mallaData[currentView]);
     }
-    
-    updateProgress();
 }
 
-function renderNivel(nivel) {
+function cargarBloques(bloquesData) {
     const container = document.getElementById('bloques-container');
-    const bloques = mallaData[nivel];
-    
-    for (const [bloqueNombre, asignaturas] of Object.entries(bloques)) {
+
+    for (const [nombreBloque, asignaturas] of Object.entries(bloquesData)) {
         const bloqueDiv = document.createElement('div');
         bloqueDiv.className = 'bloque';
-        bloqueDiv.dataset.nivel = nivel;
-        
+        bloqueDiv.dataset.nivel = currentView;
+
         // Cabecera del bloque
         const bloqueHeader = document.createElement('div');
         bloqueHeader.className = 'bloque-header';
-        
-        const bloqueTitle = document.createElement('h2');
-        bloqueTitle.className = 'bloque-title';
-        bloqueTitle.textContent = bloqueNombre;
-        
-        const bloqueCreditos = document.createElement('span');
-        bloqueCreditos.className = 'bloque-creditos';
+
+        const tituloBloque = document.createElement('h2');
+        tituloBloque.className = 'bloque-title';
+        tituloBloque.textContent = nombreBloque;
+
+        const creditosBloque = document.createElement('span');
+        creditosBloque.className = 'bloque-creditos';
         const totalCreditos = asignaturas.reduce((sum, asig) => sum + asig.creditos, 0);
-        bloqueCreditos.textContent = `${totalCreditos} créditos`;
-        
-        bloqueHeader.appendChild(bloqueTitle);
-        bloqueHeader.appendChild(bloqueCreditos);
+        creditosBloque.textContent = `${totalCreditos} créditos`;
+
+        bloqueHeader.appendChild(tituloBloque);
+        bloqueHeader.appendChild(creditosBloque);
         bloqueDiv.appendChild(bloqueHeader);
-        
+
         // Asignaturas
         asignaturas.forEach(asignatura => {
             const asignaturaDiv = document.createElement('div');
             asignaturaDiv.className = 'asignatura';
             asignaturaDiv.dataset.codigo = asignatura.codigo || asignatura.nombre.replace(/\s+/g, '-').toLowerCase();
-            
+
             // Información de la asignatura
             const infoDiv = document.createElement('div');
             infoDiv.className = 'asignatura-info';
-            
-            const nombreSpan = document.createElement('div');
-            nombreSpan.className = 'asignatura-nombre';
-            nombreSpan.textContent = asignatura.nombre;
-            
+
+            const nombreAsignatura = document.createElement('div');
+            nombreAsignatura.className = 'asignatura-nombre';
+            nombreAsignatura.textContent = asignatura.nombre;
+
             const detallesDiv = document.createElement('div');
             detallesDiv.className = 'asignatura-detalles';
-            
+
             if (asignatura.codigo) {
                 const codigoSpan = document.createElement('span');
                 codigoSpan.className = 'asignatura-codigo';
                 codigoSpan.textContent = `Código: ${asignatura.codigo}`;
                 detallesDiv.appendChild(codigoSpan);
             }
-            
+
             const creditosSpan = document.createElement('span');
             creditosSpan.className = 'asignatura-creditos';
             creditosSpan.textContent = `${asignatura.creditos} créditos`;
             detallesDiv.appendChild(creditosSpan);
-            
+
             if (asignatura.requisitos && asignatura.requisitos.length > 0) {
                 const requisitosDiv = document.createElement('div');
                 requisitosDiv.className = 'asignatura-requisitos';
@@ -156,98 +153,108 @@ function renderNivel(nivel) {
                 
                 detallesDiv.appendChild(requisitosDiv);
             }
-            
+
             if (asignatura.modalidad) {
                 const modalidadDiv = document.createElement('div');
                 modalidadDiv.className = 'asignatura-modalidad';
                 modalidadDiv.textContent = `Modalidad: ${asignatura.modalidad}`;
                 detallesDiv.appendChild(modalidadDiv);
             }
-            
-            infoDiv.appendChild(nombreSpan);
+
+            infoDiv.appendChild(nombreAsignatura);
             infoDiv.appendChild(detallesDiv);
-            
-            // Evento para marcar como aprobada al hacer clic
+            asignaturaDiv.appendChild(infoDiv);
+
+            // Evento para marcar como aprobada
             asignaturaDiv.addEventListener('click', function() {
                 this.classList.toggle('aprobada');
-                saveProgress();
-                updateProgress();
+                actualizarProgreso();
             });
-            
+
             bloqueDiv.appendChild(asignaturaDiv);
         });
-        
+
         container.appendChild(bloqueDiv);
     }
 }
 
-function setupEventListeners() {
-    // Botones de nivel
+function configurarEventos() {
+    // Botones de navegación
+    document.getElementById('btn-diplomado').addEventListener('click', function() {
+        currentView = 'diplomado';
+        actualizarBotones();
+        cargarMalla();
+    });
+
+    document.getElementById('btn-bachillerato').addEventListener('click', function() {
+        currentView = 'bachillerato';
+        actualizarBotones();
+        cargarMalla();
+    });
+
+    document.getElementById('btn-todos').addEventListener('click', function() {
+        currentView = 'todos';
+        actualizarBotones();
+        cargarMalla();
+    });
+
+    // Botón guardar
+    document.getElementById('btn-guardar').addEventListener('click', guardarProgreso);
+}
+
+function actualizarBotones() {
     document.querySelectorAll('.nivel-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            document.querySelectorAll('.nivel-btn').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            renderMalla(this.dataset.nivel);
+        btn.classList.remove('active');
+    });
+    document.getElementById(`btn-${currentView}`).classList.add('active');
+}
+
+function guardarProgreso() {
+    const progreso = {};
+    
+    document.querySelectorAll('.asignatura').forEach(asig => {
+        const codigo = asig.dataset.codigo;
+        progreso[codigo] = asig.classList.contains('aprobada');
+    });
+    
+    localStorage.setItem('malla-progreso', JSON.stringify(progreso));
+    alert('Progreso guardado correctamente');
+}
+
+function cargarProgreso() {
+    const progresoGuardado = localStorage.getItem('malla-progreso');
+    if (!progresoGuardado) return;
+    
+    const progreso = JSON.parse(progresoGuardado);
+    
+    // Esperar a que se cargue la malla
+    setTimeout(() => {
+        document.querySelectorAll('.asignatura').forEach(asig => {
+            const codigo = asig.dataset.codigo;
+            if (progreso[codigo]) {
+                asig.classList.add('aprobada');
+            }
         });
-    });
-    
-    // Reiniciar progreso
-    document.getElementById('reset-btn').addEventListener('click', function() {
-        if (confirm('¿Estás seguro de que quieres reiniciar todo tu progreso?')) {
-            localStorage.removeItem('malla-progress');
-            document.querySelectorAll('.asignatura').forEach(asig => {
-                asig.classList.remove('aprobada');
-            });
-            updateProgress();
-            alert('Progreso reiniciado correctamente');
-        }
-    });
+        actualizarProgreso();
+    }, 100);
 }
 
-function saveProgress() {
-    const progress = {};
-    
-    document.querySelectorAll('.asignatura').forEach(asig => {
-        const codigo = asig.dataset.codigo;
-        progress[codigo] = asig.classList.contains('aprobada');
-    });
-    
-    localStorage.setItem('malla-progress', JSON.stringify(progress));
-}
-
-function loadProgress() {
-    const savedProgress = localStorage.getItem('malla-progress');
-    if (!savedProgress) return;
-    
-    const progress = JSON.parse(savedProgress);
-    
-    document.querySelectorAll('.asignatura').forEach(asig => {
-        const codigo = asig.dataset.codigo;
-        if (progress[codigo]) {
-            asig.classList.add('aprobada');
-        }
-    });
-    
-    updateProgress();
-}
-
-function updateProgress() {
+function actualizarProgreso() {
     const totalAsignaturas = document.querySelectorAll('.asignatura').length;
     const aprobadas = document.querySelectorAll('.asignatura.aprobada').length;
     
     // Calcular créditos aprobados
-    let creditosAprobados = 0;
+    let creditos = 0;
     document.querySelectorAll('.asignatura.aprobada').forEach(asig => {
         const creditosText = asig.querySelector('.asignatura-creditos').textContent;
-        const creditos = parseInt(creditosText);
-        creditosAprobados += isNaN(creditos) ? 0 : creditos;
+        const creditosAsig = parseInt(creditosText);
+        creditos += isNaN(creditosAsig) ? 0 : creditosAsig;
     });
     
     // Actualizar UI
     document.getElementById('aprobadas-count').textContent = aprobadas;
-    document.getElementById('creditos-aprobados').textContent = creditosAprobados;
+    document.getElementById('creditos-aprobados').textContent = creditos;
     
     const porcentaje = totalAsignaturas > 0 ? Math.round((aprobadas / totalAsignaturas) * 100) : 0;
-    document.getElementById('progreso-porcentaje').textContent = `${porcentaje}%`;
     document.getElementById('progress-fill').style.width = `${porcentaje}%`;
 }

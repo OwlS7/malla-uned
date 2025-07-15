@@ -167,18 +167,13 @@ function renderNivel(nivel) {
             infoDiv.appendChild(nombreSpan);
             infoDiv.appendChild(detallesDiv);
             
-            // Checkbox
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.className = 'asignatura-checkbox';
-            checkbox.addEventListener('change', function() {
-                asignaturaDiv.classList.toggle('aprobada', this.checked);
+            // Evento para marcar como aprobada al hacer clic
+            asignaturaDiv.addEventListener('click', function() {
+                this.classList.toggle('aprobada');
                 saveProgress();
                 updateProgress();
             });
             
-            asignaturaDiv.appendChild(infoDiv);
-            asignaturaDiv.appendChild(checkbox);
             bloqueDiv.appendChild(asignaturaDiv);
         });
         
@@ -196,29 +191,12 @@ function setupEventListeners() {
         });
     });
     
-    // Búsqueda
-    document.getElementById('search-input').addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
-        const asignaturas = document.querySelectorAll('.asignatura');
-        
-        asignaturas.forEach(asig => {
-            const nombre = asig.querySelector('.asignatura-nombre').textContent.toLowerCase();
-            const codigo = asig.dataset.codigo.toLowerCase();
-            const matches = nombre.includes(searchTerm) || codigo.includes(searchTerm);
-            asig.style.display = matches ? 'flex' : 'none';
-        });
-    });
-    
-    // Guardar progreso
-    document.getElementById('save-btn').addEventListener('click', saveProgress);
-    
     // Reiniciar progreso
     document.getElementById('reset-btn').addEventListener('click', function() {
         if (confirm('¿Estás seguro de que quieres reiniciar todo tu progreso?')) {
             localStorage.removeItem('malla-progress');
             document.querySelectorAll('.asignatura').forEach(asig => {
                 asig.classList.remove('aprobada');
-                asig.querySelector('.asignatura-checkbox').checked = false;
             });
             updateProgress();
             alert('Progreso reiniciado correctamente');
@@ -247,7 +225,6 @@ function loadProgress() {
         const codigo = asig.dataset.codigo;
         if (progress[codigo]) {
             asig.classList.add('aprobada');
-            asig.querySelector('.asignatura-checkbox').checked = true;
         }
     });
     
@@ -268,13 +245,9 @@ function updateProgress() {
     
     // Actualizar UI
     document.getElementById('aprobadas-count').textContent = aprobadas;
-    document.getElementById('total-asignaturas').textContent = totalAsignaturas;
     document.getElementById('creditos-aprobados').textContent = creditosAprobados;
     
-    // Actualizar barras de progreso
-    const porcentajeAsignaturas = totalAsignaturas > 0 ? (aprobadas / totalAsignaturas) * 100 : 0;
-    const porcentajeCreditos = (creditosAprobados / 129) * 100;
-    
-    document.getElementById('asignaturas-progress').style.width = `${porcentajeAsignaturas}%`;
-    document.getElementById('creditos-progress').style.width = `${porcentajeCreditos}%`;
+    const porcentaje = totalAsignaturas > 0 ? Math.round((aprobadas / totalAsignaturas) * 100) : 0;
+    document.getElementById('progreso-porcentaje').textContent = `${porcentaje}%`;
+    document.getElementById('progress-fill').style.width = `${porcentaje}%`;
 }
